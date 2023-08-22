@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MoneyApp_Api.Services;
 
 namespace MoneyApp_Api.Controllers
 {
@@ -6,28 +7,25 @@ namespace MoneyApp_Api.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IJobService _service;
+
+
+        public WeatherForecastController( IJobService service)
         {
-            _logger = logger;
+
+            _service = service;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+      
+
+        [HttpGet("Task")]
+        public async Task<IActionResult> GetAllJobs()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return Ok(await _service.GetJobs());
         }
     }
 }
