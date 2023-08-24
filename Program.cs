@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 10));
 builder.Services.AddDbContext<railwayContext>(
     
-    options => { options.UseMySql(builder.Configuration["ConnectionStrings:Db"], serverVersion);
+    options => { options.UseMySql(builder.Configuration.GetConnectionString(builder.Configuration["ConnectionStrings:Db"]), serverVersion);
 
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,7 +19,6 @@ builder.Services.AddDbContext<railwayContext>(
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 
