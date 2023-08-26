@@ -9,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 10));
+
 builder.Services.AddDbContext<railwayContext>(
     
-    options => { options.UseMySql(builder.Configuration["DbConnection:Railway"], serverVersion);
+    options => { options.UseMySql(DataHelper.GetStringDB(builder.Configuration),serverVersion);
 
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
