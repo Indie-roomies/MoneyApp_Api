@@ -8,5 +8,7 @@ public class UserDto
 
     public string UserName { get; set;} = string.Empty;
 
-    public string Password  { get; set;} = string.Empty;
+    public byte[] PasswordSalt { get; set;} 
+
+    public byte[] PasswordHash { get; set;}
 }
